@@ -1,0 +1,8 @@
+@font-face {
+	font-family:'SF Pro SC';
+	font-style:normal;
+	font-weight:200;
+	src:local('☺︎'), url("https://www.apple.com/wss/fonts/SF-Pro-SC/v1/PingFangSC-Thin.woff2") format("woff2"), url("https://www.apple.com/wss/fonts/SF-Pro-SC/v1/PingFangSC-Thin.woff") format("woff"), url("https://www.apple.com/wss/fonts/SF-Pro-SC/v1/PingFangSC-Thin.ttf") format("truetype");
+	/* (C) 2015 Apple Inc. All rights reserved.*/
+}
+

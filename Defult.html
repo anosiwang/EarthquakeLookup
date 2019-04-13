@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>地震离你有多近？</title>
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <link rel="stylesheet" type="text/css" href="css/mainbuild.css">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes" /> 
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+            (function(d) {
+              var config = {
+                kitId: 'ibt7ffz',
+                scriptTimeout: 3000,
+                async: true
+              },
+              h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+            })(document);
+          </script>  
+</head>
+    <body>
+        <modal id="info-bar" class="info-bar-hide">
+            <span id="ico-info" class="ico-info"></span>
+            <span id="info" class="info-text">抱歉，您的浏览器不支持定位，请选择手动输入位置。</span>
+        </modal>
+
+        /-----Opener1-----/
+        <modal id="interface1" class="interface-modal hide">
+            <div id="interface1_img" class="interface1-img"></div>
+            <span id="skip" class="skip">跳过</span>
+            <div id="interface1-text" class="interface-text text-center">
+                <span class="headline-2">地球上每天会发生<br>约 50 次地震*</span>
+                <span class="caption">*数据来源：美国国家地震信息中心</span>
+            </div>
+        </modal>
+
+        /-----Opener2-----/
+        <modal id="interface2" class="interface-modal hide">
+                <div id="interface1_img" class="interface1-img"></div>
+                <span id="skip" class="skip">跳过</span>
+                <div id="interface1-text" class="interface-text text-center">
+                    <span class="headline-2">从有记录以来<br>中国最大的三次地震<br>共造成350,421人死亡*</span>
+                    <span class="caption">*数据来源：美国国家地震信息中心</span>
+                </div>
+        </modal>
+
+        /-----Search-----/
+        <modal id="mainpage" class="interface-modal">
+            <div id="mainpage" class="mainpage">
+                <span class="headline-1 mainpage-headline">地震离你<br>有多近？</span>
+                <div id="search-group">
+                    <span id="get-location" class="get-location"></span>
+                    <input id="earthquack-search" class="input-search" type="text" name="earthquack-search" placeholder="输入地址，或点击右边自动定位">
+                    <div id="result-list" class="result-list">
+                        <ul>
+                            <li>北京市，中国</li>
+                            <li>台北市，中国</li>
+                            <li>北卡罗来纳州，美国</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+           <div id="earthmap" class="earthmap"></div> 
+            <script type="module">
+                    import {Runtime, Inspector} from "https://unpkg.com/@observablehq/notebook-runtime?module";
+                    import notebook from "https://api.observablehq.com/@leeyee1997/world-tour.js";
+                    Runtime.load(notebook, (cell) => {
+                    if (cell.name === "canvas") {
+                        return {
+                        fulfilled: (value) => {
+                            document.getElementById("earthmap").appendChild(value);
+                        }
+                        };
+                    }
+                    });
+            </script> 
+    </modal>
+
+    </body>
+    <script>
+    $("#get-location").click(getLocation);
+    /*-----Location Fetching-----*/
+    function getLocation() {
+        if (navigator.geolocation)
+            {
+            navigator.geolocation.getCurrentPosition(showPosition,showError);
+            }
+        else{
+            $("#info").text("抱歉，您的浏览器不支持定位，请选择手动输入位置。");
+        }
+    }
+    /*-----Send Location to search-----*/
+    function showPosition(position) {
+        $("#info").text("Latitude: " + position.coords.latitude + 
+        "<br />Longitude: " + position.coords.longitude);	
+    }
+
+    function showError(error) {
+    switch(error.code) 
+        {
+        case error.PERMISSION_DENIED:
+        $("#info").text("您拒绝了获取位置的请求，您可以选择手动输入位置。")
+        break;
+        case error.POSITION_UNAVAILABLE:
+        $("#info").text("抱歉，位置信息不可用。请手动输入位置。")
+        break;
+        case error.TIMEOUT:
+        $("#info").text("获取地理位置信息超时，您可以选择手动输入位置。")
+        break;
+        case error.UNKNOWN_ERROR:
+        $("#info").text("获取地理位置时发生了未知错误，请手动输入位置。");
+        break;
+        }
+    }
+    </script>
+</html>
