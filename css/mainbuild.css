@@ -210,10 +210,11 @@ body {
 }
 
 .earthmap {
-    position: absolute;
+    position: fixed;
     display: block;
     overflow: hidden;
-    bottom: -30%;
+    bottom: -40%;
+    
 }
 
 canvas {
