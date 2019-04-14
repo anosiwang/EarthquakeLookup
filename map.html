@@ -238,7 +238,9 @@
               var pointLatLng = e.geocode.center
               var mapLocation = map.latLngToContainerPoint(pointLatLng)
               var mapBbox = e.geocode.bbox
+              $("input").blur();
               GetFeatureInfo(mapLocation, mapBbox);})
+              
 
               // var poly = L.polygon([
               //      bbox.getSouthEast(),
