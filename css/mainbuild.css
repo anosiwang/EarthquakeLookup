@@ -210,7 +210,7 @@ body {
 }
 
 .earthmap {
-    position: fixed;
+    position: absolute;
     display: block;
     overflow: hidden;
     bottom: -40%;
