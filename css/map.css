@@ -1,0 +1,158 @@
+html, body, main {
+  height:100%;
+  overflow: hidden;
+}
+
+.leaflet-container {
+  background: #fff;
+}
+.leaflet-control-attribution {
+  display: none;
+}
+
+/* Search leaflet */
+.leaflet-right {
+  width: 90%;
+}
+
+.leaflet-top .leaflet-control {
+  margin: 0;
+}
+
+.leaflet-right .leaflet-control{
+  margin: 5% !important;
+  min-height: 50px;
+}
+.leaflet-touch .leaflet-control-geocoder {
+  width: 100%;
+}
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+  border: 0px solid rgba(0,0,0,0.2) !important;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25) !important;
+}
+
+.leaflet-control-geocoder-alternatives {
+  width: 100% !important;
+}
+
+.leaflet-control-geocoder-icon {
+  /* display: none !important; */
+  background-color: transparent !important;
+}
+
+.leaflet-control-geocoder-form input {
+  font-size: 14px !important;
+  border: 0;
+  background-color: transparent;
+  width: 246px;
+  min-height: 50px;
+  padding-left: 12px;
+}
+
+/*leaflet.styledlayercontrol.custom.css*/
+.ac-container{
+	width: auto;
+	text-align: left;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: auto;
+}
+
+div[id^="leaflet-control-accordion-layers"] > label {
+	padding: 2px 5px;
+    font-weight: bold;
+	position: relative;
+	z-index: 20;
+	display: block;
+	height: 30px;
+	cursor: pointer;
+	color: #777;
+	line-height: 33px;
+	font-size: 14px;
+	background: #eee;
+	box-shadow:
+		0px 0px 0px 1px rgba(155,155,155,0.3),
+		1px 0px 0px 0px rgba(255,255,255,0.9) inset,
+		0px 2px 2px rgba(0,0,0,0.1);
+    box-sizing: content-box;
+    cursor:pointer;
+    width: auto;
+    margin: 0;
+}
+div[id^="leaflet-control-accordion-layers"] > label:hover {
+	background: #eaeaea;
+}
+.ac-container div[id^="leaflet-control-accordion-layers"] > label:hover:after,
+.ac-container div[id^="leaflet-control-accordion-layers"] > input.menu + label:hover:after{
+	content: '';
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	right: 13px;
+	top: 7px;
+	background: transparent url(dist/images/arrow_down.png) no-repeat center center;
+}
+.ac-container div[id^="leaflet-control-accordion-layers"] > input.menu:checked + label:hover:after{
+	background-image: url(dist/images/arrow_up.png);
+}
+.ac-container input.menu{
+	display: none;
+}
+.ac-container article{
+	background: rgba(255, 255, 255, 0.5);
+	margin-top: -1px;
+	overflow: hidden;
+	height: 0px;
+    padding: 0px;
+    line-height: 0px;
+	position: relative;
+	z-index: 10;
+	-webkit-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-moz-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-o-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	-ms-transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+	transition: height 0.3s ease-in-out, box-shadow 0.6s linear;
+}
+
+.ac-container input.menu:checked ~ article{
+	-webkit-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-moz-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-o-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	-ms-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+	transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
+}
+
+.ac-container input.menu:checked ~ article.ac-large{
+	height: auto;
+	max-height : 100px;
+	padding: 8px 0;
+	overflow-y: auto;
+    line-height: 18px;
+}
+
+.ac-container article label {
+    display: inline;
+    cursor: pointer;
+}
+
+.ac-container .group-toggle-container {
+    text-align: right;
+    margin-right: 3px;
+    line-height: 0px;
+    display: none;
+    height: 20px;
+}
+
+.ac-container input.menu:checked ~ .group-toggle-container {
+    display: block;
+	line-height: 1em;
+}
+
+.leaflet-control-layers-expanded {
+    padding: 5px;
+}
+
+
+/*  */
