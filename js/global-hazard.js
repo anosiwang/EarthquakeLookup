@@ -33,5 +33,5 @@ function run(latlng, info) {
     //     table += '</td></tr>';
     //     table += '</table>';
     // };
-    if (attribute.getAttribute('value') != '0') { display(latlng, info); }
+    if (attribute.getAttribute('value') != '0') { display(latlng, info); };
 }
