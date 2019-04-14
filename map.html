@@ -41,6 +41,7 @@
                 <span id="numberCap" class="numberCap">里氏 </span>
                 <span id="number" class="number">6.8</span>
                 <span id="numberCap" class="numberCap"> 级地震*</span>
+                <span id="caption" class="caption">*不用恐慌，推测数据</span>
                 <div id="locationInfo">
                 <span id="locationLogo" class="locationLogo"></span>
                 <span id="locationName" class="locationName">北京市</span></div>
@@ -67,10 +68,11 @@
     <script src="https://maps.openquake.org/static/js/dist/leaflet.easy-button.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.areaselect.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.select.js"></script>
+    <script src="js/XmltoJson.js"></script>
+    <script src="js/earthquakeCalculater.js"></script>
 
 
 
-    <!-- <script src="ajax-xml.js"></script> -->
     <script>
       var MAPSLUG = "global-seismic-hazard-map",
           MAPPROJECT = "ghm",
@@ -109,35 +111,14 @@
           });
           return layers;
       }
+
+
       //数据调用
-      function display(latlng, data, marker, el) {
-        console.log(latlng, data, marker, el)
-          // /* workaround for ECMA 5 browsers which do not
-          //    support function arguments with a default */
-          // marker = (typeof marker !== 'undefined') ?  marker : true;
-          // el = (typeof el !== 'undefined') ?  el : '#data';
-          //
-          // sidebarReset();
-          // if ( marker ) {
-          //     gfiMarker = L.marker([latlng.lat, latlng.lng]).addTo(map);
-          //     // If marker is clicked it is removed and sidebar is reset
-          //     gfiMarker.on('click', sidebarReset);
-          // }
-          // if ( ! infoContainer.hasClass("show") ) { infoContainer.collapse("show"); }
-          // dataContainer.html(data);
-          // dataDiv.show();
-          // dataContainer.show();
-      }
-      // // function sidebarReset() {
-      // //     if (typeof gfiMarker !== 'undefined') { map.removeLayer(gfiMarker); }
-      // //     dataContainer.hide();
-      // //     dataDiv.hide();
-      // //     dataContainer.html('');
-      // // }
-      // // function displayClose() {
-      // //     sidebarReset();
-      // //
-      // // }
+      function display(info) {
+          console.log(info);
+        $("#number").text(info.seismiCity);
+      };
+
       function WMSGenerator(x) {
          var crs = map.options.crs;
          var bounds = x;
@@ -182,22 +163,9 @@
               data: params,
               dataType: 'xml',
               success: function(data) {
-
-                  console.log(data);
-                  var executed = '';
-                  map.eachLayer(function(layer) {
-                      if( layer instanceof L.TileLayer ) {
-                          if (layer.options.hasOwnProperty('ext')) {
-                              if (layer.options.ext && layer.options.ext != executed) {
-                                  executed = layer.options.ext;
-                                  $.getScript(layer.options.ext, function() {
-                                      run(e.latlng, data);
-
-                                  });
-                              }
-                          }
-                      }
-                  });
+                var pga = $(data).find("Attribute").attr("value");
+                var earthquakeResult = earthquakeCal (pga);
+                display(earthquakeResult);
               },
               fail: function(data){
                   alert('Unable to load WMS data');
@@ -257,7 +225,6 @@
               var pointLatLng = e.geocode.center
               var mapLocation = map.latLngToContainerPoint(pointLatLng)
               var mapBbox = e.geocode.bbox
-              console.log(mapBbox);
               GetFeatureInfo(mapLocation, mapBbox);})
 
               // var poly = L.polygon([
@@ -278,15 +245,6 @@
            minZoom: 4,
       });
       layer_e7d85370.addTo(map);
-
-      activeBaseLayer = 'Natural Earth (gray)';
-
-
-
-
-
-
-
 
       var baseLayers = [{
           groupName: "Base maps",

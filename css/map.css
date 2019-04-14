@@ -182,31 +182,35 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
 	display: block;
 	font-size: 25px;
 	font-weight: 100;
+	text-shadow: black 1px 1px 20px;
 }
 
 .numberCap {
 	font-size: 35px;
     display: inline-block;
-    font-weight: 600;
+		font-weight: 600;
+		text-shadow: black 1px 1px 20px;
 }
 
 .number {
 	font-size: 35px;
     display: inline-block;
     font-weight: 900;
-    color: red;
+		color: red;
+		text-shadow: black 1px 1px 20px;
 }
 
 .locationLogo {
 	background-color: rgba(255, 255, 255);
 	-webkit-mask-image: url(../img/ico/location.svg);
 	mask-image: url(../img/ico/location.svg);
-	-webkit-mask-size: 50px 50px;
-	mask-size: 50px 50px;
-	width: 50px; 
-	height: 50px;
+	-webkit-mask-size: 40px 40px;
+	mask-size: 40px 40px;
+	width: 40px; 
+	height: 40px;
 	display: inline-block;
 	vertical-align: middle;
+	box-shadow: black 1px 1px 20px;
 }
 
 .locationName {
@@ -214,4 +218,10 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
 	display: inline-block;
 	font-weight: 600;	
 	vertical-align: middle;
+	text-shadow: black 1px 1px 20px;
+}
+
+.caption {
+	display: block;
+  font-size: 10px;
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+    var quake = {
+        pga: (0.7 * 9.81).toFixed(2),//Peak ground acceleration（m/s2)
+        seismicIntensity: "",
+        seismiCity: "" 
+    };
+
+    //Calculate PGA
+    
+    // quake.seismiCity // Seismicity
+    // quake.seismicIntensity //Seismic Intensity
+    
+
+    //Calculate Seismic Intensity and Seismicity
+    Number(quake.pga);
+    if (0<=quake.pga<0.22) {
+        quake.seismicIntensity = "I, II, III, IIII";
+        quake.seismiCity = "<3.7";
+    };
+    if (0.22<=quake.pga<0.45) {
+        quake.seismicIntensity = "V";
+        quake.seismiCity = "4.3";
+    };
+    if (0.45<=quake.pga<0.90) {
+        quake.seismicIntensity = "VI"; 
+        quake.seismiCity = "4.9";
+    };
+    if (0.90<=quake.pga<1.78) {
+        quake.seismicIntensity = "VII"; 
+        quake.seismiCity = "5.5";
+    };
+    if (1.78<=quake.pga<3.54) {
+        quake.seismicIntensity = "VIII"; 
+        quake.seismiCity = "6.1";
+    };
+    if (3.54<=quake.pga<7.08) {
+        quake.seismicIntensity = "IX"; 
+        quake.seismiCity = "6.7";
+    };
+    if (7.08<=quake.pga<14.15) {
+        quake.seismicIntensity = "X";
+        quake.seismiCity = "7.3";
+    };
+    if (14.15<=quake.pga) {
+        quake.seismicIntensity = "XI, XII";
+        quake.seismiCity = ">7.9";  
+    };
+
+    console.log(quake);
+</script>
+</head>
+<body>
+
+<button>设置所有p元素的文本内容</button>
+<p>这是一个段落。</p>
+<p>这是另一个段落。</p>
+
+</body>
+</html>
