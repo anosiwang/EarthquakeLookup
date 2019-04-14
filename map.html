@@ -1,0 +1,417 @@
+
+
+
+
+
+<!doctype html>
+<html lang="en" class="map-page">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="GEM Foundation">
+    <link rel="icon" type="image/png" href="static/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/static/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16" />
+
+    <title>OpenQuake Map Viewer - Global Seismic Hazard Map</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maps.openquake.org/static/css/dist/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/fonts.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/main.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.orghttps://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.fullscreen.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.control.geocoder.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.measure.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.zoomhome.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.control.htmllegend.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.easy-button.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.areaselect.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/dist/leaflet.select.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/leaflet.styledlayercontrol.custom.css"/>
+    <link rel="stylesheet" href="https://maps.openquake.org/static/css/map.css"/>
+
+
+  </head>
+  <body class="bg-dark">
+    <div class="container-fluid h-100 d-flex flex-column">
+
+      <main class="row">
+        <div class="h-100 map-container flex-fill">
+          <div class="container-fluid h-100">
+            <div class="row h-100" id="map-container">
+              <div class="col w-100" id="map"></div>
+
+            </div>
+          </div>
+        </div>
+        <div class="test" id="data">
+
+        </div>
+      </main>
+    </div>
+
+
+    <script src="https://maps.openquake.org/static/js/dist/jquery.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/download.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/chart.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.singleclick.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.fullscreen.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.styledlayercontrol.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.hash.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.measure.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.zoomhome.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.wms.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.control.htmllegend.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.control.geocoder.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.easy-button.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.areaselect.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.select.js"></script>
+    <script src="https://maps.openquake.org/static/js/legend.js"></script>
+    <script src="https://maps.openquake.org/media/common/js/common.js"></script>
+    <script>
+      var MAPSLUG = "global-seismic-hazard-map",
+          MAPPROJECT = "ghm",
+          collapsed = (L.Browser.android || L.Browser.mobile || L.Browser.retina),
+          gfiMarker;
+
+      var infoContainer = $( "#info-container" ),
+          dataContainer = $( "#data" ),
+          dataDiv = $( "#data-div" );
+
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+      });
+      // Async signals
+      infoContainer.on('shown.bs.collapse', function() {
+          map.invalidateSize();
+      });
+      infoContainer.on('hidden.bs.collapse', function() {
+          map.invalidateSize();
+          sidebarReset();
+      });
+      function filterTileLayers(property) {
+          var layers = [];
+          map.eachLayer(function(layer) {
+              if( layer instanceof L.TileLayer ) {
+                  if (property) {
+                      if (layer.options.hasOwnProperty(property)) {
+                          if (layer.options[property]) {
+                              layers.push(layer.options.name);
+                          }
+                      }
+                  } else {
+                      layers.push(layer.options.name);
+                  }
+              }
+          });
+          return layers;
+      }
+      function display(latlng, data, marker, el) {
+
+          /* workaround for ECMA 5 browsers which do not
+             support function arguments with a default */
+          marker = (typeof marker !== 'undefined') ?  marker : true;
+          el = (typeof el !== 'undefined') ?  el : '#data';
+
+          sidebarReset();
+          if ( marker ) {
+              gfiMarker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+              // If marker is clicked it is removed and sidebar is reset
+              gfiMarker.on('click', sidebarReset);
+          }
+          if ( ! infoContainer.hasClass("show") ) { infoContainer.collapse("show"); }
+          dataContainer.html(data);
+          dataDiv.show();
+          dataContainer.show();
+      }
+      function sidebarReset() {
+          if (typeof gfiMarker !== 'undefined') { map.removeLayer(gfiMarker); }
+          dataContainer.hide();
+          dataDiv.hide();
+          dataContainer.html('');
+      }
+      function displayClose() {
+          sidebarReset();
+
+      }
+      function WMSGenerator() {
+         var crs = map.options.crs;
+         var bounds = map.getBounds();
+         var size = map.getSize();
+         var nw = crs.project(bounds.getNorthWest());
+         var se = crs.project(bounds.getSouthEast());
+         var params = {
+              'width': size.x,
+              'height': size.y
+         };
+         params.bbox = ([nw.x, se.y, se.x, nw.y]).join(',');
+
+         return params;
+      }
+      function GetFeatureInfo(e) {
+          var wms = WMSGenerator();
+          params = {
+              width: wms.width,
+              height: wms.height,
+              bbox: wms.bbox,
+              layers: filterTileLayers('ext').toString(),
+              x: wms.width/2,
+              y: wms.height/2,
+              format: 'text/xml'
+          }
+          $.ajax({
+          type: "POST",
+              url: 'https://maps.openquake.org/api/project/' + MAPPROJECT + '/getfeatureinfo',
+              data: params,
+              dataType: 'xml',
+              success: function(data) {
+                  var executed = '';
+                  map.eachLayer(function(layer) {
+                      if( layer instanceof L.TileLayer ) {
+                          if (layer.options.hasOwnProperty('ext')) {
+                              if (layer.options.ext && layer.options.ext != executed) {
+                                  executed = layer.options.ext;
+                                  $.getScript(layer.options.ext, function() {
+                                      run(e.latlng, data);
+                                  });
+                              }
+                          }
+                      }
+                  });
+              },
+              fail: function(data){
+                  alert('Unable to load WMS data');
+              }
+          });
+      }
+    </script>
+
+    <script>
+      // general map
+      var bounds =  [[-80.0, -180.0],
+                     [80.0, 180.0]];
+      var map = L.map('map', {
+          fullscreenControl: true,
+          center: ['32', '-2'],
+          zoom: 3,
+          zoomControl: false,
+          maxZoom: 8,
+          minZoom: 2,
+          singleClickTimeout: 250
+      });
+
+      // zoom
+
+      // var zoomHome = L.Control.zoomHome({
+      //     zoomHomeIcon: 'undo',
+      //     zoomHomeTitle: 'Reset view',
+      // }).addTo(map);
+
+
+      var hash = new L.Hash(map);
+
+      // var showSidebar = L.easyButton('<i class="fas fa-info"></i>', function(){
+      //     infoContainer.collapse("toggle");
+      // }).addTo(map);
+
+      // scale
+
+      // L.control.scale().addTo(map);
+
+
+      // logo
+
+      map.attributionControl.addAttribution('M. Pagani et al.');
+
+      // geocoder搜索框
+
+      var geocoder = L.Control.geocoder({
+              defaultMarkGeocode: true,
+              collapsed: false
+          })
+          geocoder.on('markgeocode', function(e) {
+
+              GetFeatureInfo(e);})
+
+              // var poly = L.polygon([
+              //      bbox.getSouthEast(),
+              //      bbox.getNorthEast(),
+              //      bbox.getNorthWest(),
+              //      bbox.getSouthWest()
+              // ]).addTo(map);
+              // map.fitBounds(poly.getBounds());
+
+          .addTo(map);
+
+
+      // measuring tool
+
+
+      // basemaps
+      var activeBaseLayer;
+
+      var layer_e7d85370 = L.tileLayer('https://maps.openquake.org/mapproxy/ne/wmts/natural-earth-gray/webmercator/{z}/{x}/{y}.png', {
+          // trick: expose name via options, used in events
+          name: 'Natural Earth (gray)',
+          attribution: '<a href=\"https://www.naturalearthdata.com/\" target=\"_blank\">Natural Earth</a>',
+           maxZoom: 15,
+           minZoom: 2,
+      });
+      layer_e7d85370.addTo(map);
+      activeBaseLayer = 'Natural Earth (gray)';
+
+
+
+
+
+
+
+
+      var baseLayers = [{
+          groupName: "Base maps",
+          expanded: false,
+          layers: {
+
+              "Natural Earth (gray)": layer_e7d85370,
+
+      }}];
+
+      // overlay layers
+      var printableLayers = [];
+
+
+      L.tileLayer('https://maps.openquake.org/watermark/gem-white/{z}/{x}/{y}.png', {
+          name: 'GEM white',
+          opacity: 0.1,
+          zIndex: 100000,
+      }).addTo(map);
+
+
+
+
+
+
+
+
+
+
+      var layer_f883bee1 = L.tileLayer('https://maps.openquake.org/mapproxy/ghm/wmts/shaded-relief/webmercator/{z}/{x}/{y}.png', {
+          // trick: expose name via options, used in events
+          name: 'Shaded Relief',
+          overlay: true,
+          attribution: '',
+          legend: false,
+          printable: true,
+          zIndex:9997,
+          ext: '',
+
+          maxZoom: 15,
+          minZoom: 2,
+      });
+
+
+      var layer_d8644989 = L.tileLayer('https://maps.openquake.org/mapproxy/ghm/wmts/seismic-hazard-pga-g/webmercator/{z}/{x}/{y}.png', {
+          // trick: expose name via options, used in events
+          name: 'Seismic Hazard PGA (g)',
+          overlay: true,
+          attribution: '',
+          legend: true,
+          printable: true,
+          zIndex:9996,
+          ext: 'https://maps.openquake.org/media/ext/js/global-hazard.js',
+
+          maxZoom: 15,
+          minZoom: 2,
+      });
+
+
+      var groupedOverlays = [
+
+      { groupName: "Layers",
+        expanded: true,
+        layers: {
+
+
+          "Shaded Relief": layer_f883bee1,},
+      }];
+
+      // var controlOptions = {
+      //   container_width: "300px",
+      //   container_maxHeight: "350px",
+      //   exclusive: false,
+      //   autoZIndex: false,
+      //   collapsed: collapsed,
+      // };
+      // L.Control.styledLayerControl(baseLayers, groupedOverlays, controlOptions).addTo(map);
+
+
+
+
+      layer_f883bee1.addTo(map);
+
+      printableLayers.push('Shaded Relief');
+
+      layer_d8644989.addTo(map);
+
+      printableLayers.push('Seismic Hazard PGA (g)');
+
+
+      var legendIsCustom = false;
+
+      // selector events
+      //设置不可点
+      // map.on('singleclick', GetFeatureInfo);
+
+      map.on('baselayerchange', function (e) {
+          activeBaseLayer = e.layer.options.name;
+      });
+      map.on('layeradd', function (e) {
+          if (!(e.layer instanceof L.Marker)) {
+              if (! legendIsCustom) { updateLegend(legend); }
+          }
+      });
+      map.on('layerremove', function (e) {
+          // Close sidebar on a layer removal, but not for the marker
+          if (!(e.layer instanceof L.Marker)) {
+              displayClose();
+              if (! legendIsCustom) { updateLegend(legend); }
+          }
+      });
+    </script>
+
+
+    <!-- <script>
+      legend = L.control.htmllegend({
+          position: 'bottomright',
+          legends: [{
+              name: '图例',
+              elements: [{
+                  html: '<div id="wmsLegend"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i> 载入图例中……</div>'
+              }],
+          }],
+          collapsedOnInit: collapsed,
+      });
+      updateLegend(legend, legendIsCustom);
+    </script> -->
+
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130189387-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+    gtag('config', 'UA-130189387-1');
+    </script>
+
+  </body>
+</html>
