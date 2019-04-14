@@ -84,7 +84,14 @@
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
     $("modal").css({"height":windowHeight, "width":windowWidth});
-    $("earthmap").css({"height":windowHeight*0.25, "width":windowWidth});
+    /* Device Decting */
+    if (windowHeight >= 812) {
+        $("earthmap").css({"height":windowHeight*0.55, "width":windowWidth});
+    } else if (568 < windowHeight < 812) {
+        $("earthmap").css({"height":windowHeight*0.22, "width":windowWidth});
 
+    } else {
+        $("earthmap").css({"height":windowHeight*0.2, "width":windowWidth});
+    }
     </script>
 </html>
