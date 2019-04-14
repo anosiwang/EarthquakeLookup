@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="css/mainbuild.css">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes" /> 
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
     <script>
             (function(d) {
               var config = {
@@ -27,7 +29,7 @@
             <span id="info" class="info-text">抱歉，您的浏览器不支持定位，请选择手动输入位置。</span>
         </modal>
 
-        /-----Opener1-----/
+        <!-- /-----Opener1-----/ -->
         <modal id="interface1" class="interface-modal hide">
             <div id="interface1_img" class="interface1-img"></div>
             <span id="skip" class="skip">跳过</span>
@@ -37,7 +39,7 @@
             </div>
         </modal>
 
-        /-----Opener2-----/
+        <!-- /-----Opener2-----/ -->
         <modal id="interface2" class="interface-modal hide">
                 <div id="interface1_img" class="interface1-img"></div>
                 <span id="skip" class="skip">跳过</span>
@@ -47,7 +49,7 @@
                 </div>
         </modal>
 
-        /-----Search-----/
+        <!-- /-----Search-----/ -->
         <modal id="mainpage" class="interface-modal">
                 <div id="earthmap" class="earthmap"></div> 
                 <div id="mainpage" class="mainpage">
@@ -79,10 +81,11 @@
     </body>
     <script src="js/getLocation.js"></script>
     <script src="js/earthquakeCalculater.js"></script>
-    <script src="https://maps.openquake.org/static/js/dist/jquery.min.js"></script>
+    <!-- <script src="https://maps.openquake.org/static/js/dist/jquery.min.js"></script> -->
     <script src="https://maps.openquake.org/static/js/dist/leaflet.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.hash.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.control.geocoder.js"></script>
+    <script src="js/jquery.pjax.js"></script>
 
     <script>
     //地图搜索框
@@ -107,23 +110,17 @@
               errorMessage: "没有找到你的城市",
               showResultIcons: true,
               suggestMinLength: 1
-          })
+          });
           geocoder.on('markgeocode', function(e) {
-              var pointLatLng = e.geocode.center
-              var mapLocation = map.latLngToContainerPoint(pointLatLng)
-              var mapBbox = e.geocode.bbox
-              console.log(mapBbox);
-              GetFeatureInfo(mapLocation, mapBbox);})
-
-              // var poly = L.polygon([
-              //      bbox.getSouthEast(),
-              //      bbox.getNorthEast(),
-              //      bbox.getNorthWest(),
-              //      bbox.getSouthWest()
-              // ]).addTo(map);
-              // map.fitBounds(poly.getBounds());
+            var pointLatLng = e.geocode.center; //地理坐标
+            var url = "map.html" + "#4/" + pointLatLng.lat + "/" + pointLatLng.lng;
+            console.log();
+            $.pjax({
+                    url: url,
+                    container: '#mainpage'
+                });
+        })
           .addTo(map);
-
     </script>
 
     <script>
