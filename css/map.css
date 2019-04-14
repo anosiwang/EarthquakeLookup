@@ -4,7 +4,8 @@ html, body, main {
 }
 
 .leaflet-container {
-  background: #fff;
+	background: none;
+	padding-top: 50px;
 }
 .leaflet-control-attribution {
   display: none;
@@ -12,7 +13,7 @@ html, body, main {
 
 /* Search leaflet */
 .leaflet-right {
-  width: 90%;
+  width: 98%;
 }
 
 .leaflet-top .leaflet-control {
@@ -20,7 +21,7 @@ html, body, main {
 }
 
 .leaflet-right .leaflet-control{
-  margin: 5% !important;
+	margin: 1% !important;
   min-height: 50px;
 }
 .leaflet-touch .leaflet-control-geocoder {

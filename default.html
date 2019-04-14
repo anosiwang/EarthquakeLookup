@@ -3,6 +3,9 @@
     <head>
     <meta charset="utf-8">
     <title>地震离你有多近？</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="css/map.css">
+    <link rel="stylesheet" type="text/css" href="css/leaflet.control.geocoder.css"/>
     <link rel="stylesheet" type="text/css" href="css/font.css">
     <link rel="stylesheet" type="text/css" href="css/mainbuild.css">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes" /> 
@@ -46,21 +49,18 @@
 
         /-----Search-----/
         <modal id="mainpage" class="interface-modal">
-            <div id="mainpage" class="mainpage">
+                <div id="earthmap" class="earthmap"></div> 
+                <div id="mainpage" class="mainpage">
                 <span class="headline-1 mainpage-headline">地震离你<br>有多近？</span>
-                <div id="search-group">
-                    <span id="get-location" class="get-location"></span>
-                    <input id="earthquack-search" class="input-search" type="text" name="earthquack-search" placeholder="输入地址，或点击右边自动定位">
-                    <div id="result-list" class="result-list">
-                        <ul>
-                            <li>北京市，中国</li>
-                            <li>台北市，中国</li>
-                            <li>北卡罗来纳州，美国</li>
-                        </ul>
-                    </div>
+                <div class="h-100 map-container flex-fill">
+                        <div class="container-fluid h-100">
+                            <div class="row h-100" id="map-container">
+                            <div class="col w-100" id="map"></div>
+                
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div id="earthmap" class="earthmap"></div> 
             <script type="module">
                     import {Runtime, Inspector} from "https://unpkg.com/@observablehq/notebook-runtime?module";
                     import notebook from "https://api.observablehq.com/@leeyee1997/world-tour.js";
@@ -79,6 +79,53 @@
     </body>
     <script src="js/getLocation.js"></script>
     <script src="js/earthquakeCalculater.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/jquery.min.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.hash.js"></script>
+    <script src="https://maps.openquake.org/static/js/dist/leaflet.control.geocoder.js"></script>
+
+    <script>
+    //地图搜索框
+      var map = L.map('map', {
+          fullscreenControl: false,
+          center: ['40', '120'],
+          zoom: 4,
+          zoomControl: false,
+          maxZoom: 4,
+          minZoom: 4,
+          singleClickTimeout: 250
+      });
+
+      var hash = new L.Hash(map);
+
+      // geocoder搜索框
+
+      var geocoder = L.Control.geocoder({
+              defaultMarkGeocode: true,
+              collapsed: false,
+              placeholder: "输入地址，或点击图标自动定位",
+              errorMessage: "没有找到你的城市",
+              showResultIcons: true,
+              suggestMinLength: 1
+          })
+          geocoder.on('markgeocode', function(e) {
+              var pointLatLng = e.geocode.center
+              var mapLocation = map.latLngToContainerPoint(pointLatLng)
+              var mapBbox = e.geocode.bbox
+              console.log(mapBbox);
+              GetFeatureInfo(mapLocation, mapBbox);})
+
+              // var poly = L.polygon([
+              //      bbox.getSouthEast(),
+              //      bbox.getNorthEast(),
+              //      bbox.getNorthWest(),
+              //      bbox.getSouthWest()
+              // ]).addTo(map);
+              // map.fitBounds(poly.getBounds());
+          .addTo(map);
+
+    </script>
+
     <script>
     $("#get-location").click(getLocation);
     /*Fixed Earth*/
