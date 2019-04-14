@@ -68,6 +68,7 @@
     <script src="https://maps.openquake.org/static/js/dist/leaflet.easy-button.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.areaselect.js"></script>
     <script src="https://maps.openquake.org/static/js/dist/leaflet.select.js"></script>
+    <script type="text/javascript" src="js/myGeojson.js"></script>
     <script src="js/XmltoJson.js"></script>
     <script src="js/earthquakeCalculater.js"></script>
 
@@ -266,11 +267,16 @@
       }).addTo(map);
 
       var myStyle = {
-                  "color": "#00f",
-                  "weight": 3,
-                  "opacity": 0.5,
+                  "color": "#550000",
+                  "weight": 1,
+                  "opacity": 0.5
 
               };
+
+      //地震带图
+      var layer_seam = L.geoJSON(myGeojsonData,{style:myStyle})
+      layer_seam.addTo(map);
+
       // var layer_earthquake = L.geoJSON("data/gem_active_faults.geojson",{
       //   // filter: function(feature){ return feature.geometry.show_on_map;},
       //   style: myStyle})
