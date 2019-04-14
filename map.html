@@ -36,16 +36,26 @@
           </div>
         </div>
         <div class="page-container" id="page-container">
-            <div id="page-subtitle" class="page-subtitle-container">
-                <span id="subtitle" class="subtitle">该地点可能会发生约</span>
-                <span id="numberCap" class="numberCap">里氏 </span>
-                <span id="number" class="number">6.8</span>
-                <span id="numberCap" class="numberCap"> 级地震*</span>
-                <span id="caption" class="caption">*不用恐慌，推测数据</span>
-                <div id="locationInfo">
-                <span id="locationLogo" class="locationLogo"></span>
-                <span id="locationName" class="locationName">北京市</span></div>
+            <div id="page-subtitle-1" class="page-subtitle-container no-display">
+                <div>
+                    <span id="subtitle-1-1" class="subtitle-1-title">离地壳板块边界块</span>
+                    <span id="subtitle-1-2" class="subtitle-1-red">越近</span>
+                </div>
+                <div>
+                    <span id="subtitle-1-3" class="subtitle-1-title">发生地震可能性</span>
+                    <span id="subtitle-1-4" class="subtitle-1-red">越高</span>
+                </div>
             </div>
+            <div id="page-subtitle-2" class="page-subtitle-container no-display">
+                    <span id="subtitle" class="subtitle">该地点可能会发生约</span>
+                    <span id="numberCap" class="numberCap">里氏 </span>
+                    <span id="number" class="number">6.8</span>
+                    <span id="numberCap" class="numberCap"> 级地震*</span>
+                    <span id="caption" class="caption">*不用恐慌，推测数据</span>
+                    <div id="locationInfo">
+                    <span id="locationLogo" class="locationLogo"></span>
+                    <span id="locationName" class="locationName">北京市</span></div>
+                </div>
         </div>
       </main>
     </div>
@@ -71,7 +81,6 @@
     <script type="text/javascript" src="js/myGeojson.js"></script>
     <script src="js/XmltoJson.js"></script>
     <script src="js/earthquakeCalculater.js"></script>
-
 
 
     <script>
@@ -114,10 +123,13 @@
       }
 
 
-      //数据调用
+      //----------- 展示数据
       function display(info) {
-          console.log(info);
         $("#number").text(info.seismiCity);
+        $("#page-subtitle-1").fadeIn(500);
+        $("#page-subtitle-1").delay(3000).fadeOut(500);
+        $("#page-subtitle-2").delay(4000).fadeIn(500);
+
       };
 
       function WMSGenerator(x) {

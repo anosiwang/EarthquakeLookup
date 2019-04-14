@@ -16,6 +16,7 @@ html, body, main {
   width: 98%;
 }
 
+
 .leaflet-top .leaflet-control {
   margin: 0;
 }
@@ -50,6 +51,10 @@ html, body, main {
   width: 246px;
   min-height: 50px;
   padding-left: 12px;
+}
+
+.leaflet-popup-close-button {
+	display: none;
 }
 
 /*leaflet.styledlayercontrol.custom.css*/
@@ -170,8 +175,13 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
 		color: white;
 }
 
+
+.no-display {
+	display: none;
+}
+
+
 .page-subtitle-container {
-	display: block;
 	bottom: 0;
 	position: absolute;
 	margin-left: 8px;
@@ -182,6 +192,21 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
 	display: block;
 	font-size: 25px;
 	font-weight: 100;
+	text-shadow: black 1px 1px 20px;
+}
+
+.subtitle-1-title {
+	display: inline-block;
+	font-size: 30px;
+	font-weight: 100;
+	text-shadow: black 1px 1px 20px;
+}
+
+.subtitle-1-red {
+	display: inline-block;
+	font-size: 30px;
+	font-weight: 500;
+	color: rgb(247, 39, 25);
 	text-shadow: black 1px 1px 20px;
 }
 
@@ -196,7 +221,7 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
 	font-size: 35px;
     display: inline-block;
     font-weight: 900;
-		color: red;
+		color: rgb(247, 39, 25);
 		text-shadow: black 1px 1px 20px;
 }
 
