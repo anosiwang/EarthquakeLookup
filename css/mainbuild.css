@@ -214,11 +214,10 @@ body {
     display: block;
     overflow: hidden;
     bottom: -40%;
-    
+
 }
 
 canvas {
     width: 120% !important;
     margin: 0 auto !important;
-    
 }

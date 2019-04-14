@@ -60,24 +60,29 @@
                     </div>
                 </div>
             </div>
-           <div id="earthmap" class="earthmap"></div> 
+            <div id="earthmap" class="earthmap"></div> 
             <script type="module">
                     import {Runtime, Inspector} from "https://unpkg.com/@observablehq/notebook-runtime?module";
                     import notebook from "https://api.observablehq.com/@leeyee1997/world-tour.js";
                     Runtime.load(notebook, (cell) => {
-                    if (cell.name === "canvas") {
-                        return {
-                        fulfilled: (value) => {
-                            document.getElementById("earthmap").appendChild(value);
+                        if (cell.name === "canvas") {
+                            return {
+                            fulfilled: (value) => {
+                                document.getElementById("earthmap").appendChild(value);
+                            }
+                            };
                         }
-                        };
-                    }
                     });
             </script> 
     </modal>
 
     </body>
+    <script src="js/getLocation.js"></script>
     <script>
     $("#get-location").click(getLocation);
+    /*Fixed Earth*/
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+    $("modal").css({"height":windowHeight, "width":windowWidth});
     </script>
 </html>
