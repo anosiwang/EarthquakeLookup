@@ -20,18 +20,18 @@
  */
 
 function run(latlng, info) {
-    var table = '';
-    var layers = info.getElementsByTagName("Layer");
-    for (l = 0; l < layers.length; l++) {
-        table += '<table class="table table-hover table-sm">' +
-                 '<thead class="thead-light"><tr><th scope="col" colspan="2">' +
-                 layers[l].getAttribute('name') +
-                 '</th></tr></thead>';
-        var attribute = layers[l].getElementsByTagName("Attribute")[0];
-        table += '<tr><th scope="row">10% poe in 50 years</th><td>';
-        table += attribute.getAttribute('value');
-        table += '</td></tr>';
-        table += '</table>';
-    };
-    if (attribute.getAttribute('value') != '0') { console.log(latlng, table); }
+    // var table = '';
+    // var layers = info.getElementsByTagName("Layer");
+    // for (l = 0; l < layers.length; l++) {
+    //     table += '<table class="table table-hover table-sm">' +
+    //              '<thead class="thead-light"><tr><th scope="col" colspan="2">' +
+    //              layers[l].getAttribute('name') +
+    //              '</th></tr></thead>';
+    //     var attribute = layers[l].getElementsByTagName("Attribute")[0];
+    //     table += '<tr><th scope="row">10% poe in 50 years</th><td>';
+    //     table += attribute.getAttribute('value');
+    //     table += '</td></tr>';
+    //     table += '</table>';
+    // };
+    if (attribute.getAttribute('value') != '0') { display(latlng, info); }
 }

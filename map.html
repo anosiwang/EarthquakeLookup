@@ -36,7 +36,15 @@
           </div>
         </div>
         <div class="page-container" id="page-container">
-
+            <div id="page-subtitle" class="page-subtitle-container">
+                <span id="subtitle" class="subtitle">该地点可能会发生约</span>
+                <span id="numberCap" class="numberCap">里氏 </span>
+                <span id="number" class="number">6.8</span>
+                <span id="numberCap" class="numberCap"> 级地震*</span>
+                <div id="locationInfo">
+                <span id="locationLogo" class="locationLogo"></span>
+                <span id="locationName" class="locationName">北京市</span></div>
+            </div>
         </div>
       </main>
     </div>
@@ -103,7 +111,7 @@
       }
       //数据调用
       function display(latlng, data, marker, el) {
-
+        console.log(latlng, data, marker, el)
           // /* workaround for ECMA 5 browsers which do not
           //    support function arguments with a default */
           // marker = (typeof marker !== 'undefined') ?  marker : true;

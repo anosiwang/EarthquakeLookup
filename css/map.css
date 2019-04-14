@@ -165,5 +165,53 @@ div[id^="leaflet-control-accordion-layers"] > label:hover {
     height: 100%;
     position: absolute;
     width: 100%;
-    z-index: 500;
+		z-index: 500;
+		font-family: source-han-sans-simplified-c, sans-serif;
+		color: white;
+}
+
+.page-subtitle-container {
+	display: block;
+	bottom: 0;
+	position: absolute;
+	margin-left: 8px;
+	padding-bottom: 48px;
+}
+
+.subtitle {
+	display: block;
+	font-size: 25px;
+	font-weight: 100;
+}
+
+.numberCap {
+	font-size: 35px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.number {
+	font-size: 35px;
+    display: inline-block;
+    font-weight: 900;
+    color: red;
+}
+
+.locationLogo {
+	background-color: rgba(255, 255, 255);
+	-webkit-mask-image: url(../img/ico/location.svg);
+	mask-image: url(../img/ico/location.svg);
+	-webkit-mask-size: 50px 50px;
+	mask-size: 50px 50px;
+	width: 50px; 
+	height: 50px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.locationName {
+	font-size: 35px;
+	display: inline-block;
+	font-weight: 600;	
+	vertical-align: middle;
 }
