@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="css/map.css">
     <link rel="stylesheet" type="text/css" href="css/leaflet.control.geocoder.css"/>
     <link rel="stylesheet" type="text/css" href="css/font.css">
-    <link rel="stylesheet" type="text/css" href="css/mainbuild.css">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes, user-scalable=no"/> 
+    <link rel="stylesheet" type="text/css" href="css/mainbuild.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=yes, user-scalable=no"/>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -21,7 +21,7 @@
               },
               h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
             })(document);
-          </script>  
+          </script>
 </head>
     <body>
         <modal id="info-bar" class="info-bar-hide">
@@ -51,14 +51,14 @@
 
         <!-- /-----Search-----/ -->
         <modal id="mainpage" class="interface-modal">
-                <div id="earthmap" class="earthmap"></div> 
+                <div id="earthmap" class="earthmap"></div>
                 <div id="mainpage" class="mainpage">
                 <span class="headline-1 mainpage-headline">地震离你<br>有多近？</span>
                 <div class="h-100 map-container flex-fill">
                         <div class="container-fluid h-100">
                             <div class="row h-100" id="map-container">
                             <div class="col w-100" id="map"></div>
-                
+
                             </div>
                         </div>
                 </div>
@@ -75,7 +75,7 @@
                             };
                         }
                     });
-            </script> 
+            </script>
     </modal>
 
     </body>
@@ -129,6 +129,13 @@
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
     $("modal").css({"height":windowHeight, "width":windowWidth});
+    /*show content*/
+    $(document).ready(function(){
+      $("#interface2").hide();
+      $("#mainpage").hide();
+      $("#interface2").delay(2000).fadeIn(1000);
+      $("#mainpage").delay(5000).fadeIn(1000);
+    });
     /* Device Decting */
     if (windowHeight >= 812) {
         $("earthmap").css({"height":windowHeight*0.55, "width":windowWidth});

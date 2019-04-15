@@ -49,12 +49,12 @@
     display: block;
     position: absolute;
     background-image: url(../img/mainbackground.jpg);
-    background-size: auto 100%; 
+    background-size: auto 100%;
     background-position: bottom;
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
-    bottom: 0;    
+    bottom: 0;
     /*--------Display--------*/
     display: block;
     height: 100%;
@@ -64,14 +64,14 @@
 }
 
 .hide {
-    display: none;
+    /* display: none; */
 }
 
 .interface1-img {
     display: block;
     position: absolute;
     background-image: url(../img/interface1-img.png);
-    background-size: auto 90%; 
+    background-size: auto 90%;
     background-position: bottom;
     background-repeat: no-repeat;
     width: 100%;
@@ -83,7 +83,7 @@
     display: block;
     position: absolute;
     background-image: url(../img/interface2-img.png);
-    background-size: auto 90%; 
+    background-size: auto 90%;
     background-position: bottom;
     background-repeat: no-repeat;
     width: 100%;
@@ -128,14 +128,14 @@ body {
 .get-location {
     display: block;
     position: absolute;
-    right: 5px; 
+    right: 5px;
     z-index:5;
     background-color: rgba(0, 0, 0, 0.3);
     -webkit-mask-image: url(../img/ico/location.svg);
     mask-image: url(../img/ico/location.svg);
     -webkit-mask-size: 37px 50px;
     mask-size: 37px 50px;
-    width: 37px; 
+    width: 37px;
     height: 50px;
 }
 
@@ -143,7 +143,7 @@ body {
     display: block;
     height: auto;
     position: absolute;
-    width: 90%; 
+    width: 90%;
     margin-left: 5%;
     margin-right: 5%;
     z-index: 5;
@@ -166,10 +166,10 @@ body {
     mask-image: url(../img/ico/info.svg);
     -webkit-mask-size: 30px 30px;
     mask-size: 30px 30px;
-    width: 30px; 
+    width: 30px;
     height: 30px;
     float: left;
-} 
+}
 
 .info-text {
     font-family: source-han-sans-simplified-c, sans-serif;
@@ -182,7 +182,7 @@ body {
     display: block;
     position: absolute;
     width: 100%;
-    background-color: rgba(246, 246, 246, 0.8); 
+    background-color: rgba(246, 246, 246, 0.8);
     z-index: 100;
     overflow: scroll;
     height: 120px;
@@ -195,7 +195,7 @@ body {
     font-family: source-han-sans-simplified-c, sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px; 
+    font-size: 16px;
     color: rgb(15, 15, 15);
     border: solid 2pt rgba(0, 0, 0, 0.2);
     border-width: 1pt 0 0 0;

@@ -56,9 +56,26 @@
                     <span id="locationLogo" class="locationLogo"></span>
                     <span id="locationName" class="locationName">北京市</span></div>
                 </div>
+            <div id="more-information-logo" class="logo-container no-display">
+              <img id="info-logo" class="info-logo" src="img\ico\info.svg" alt="">
+            </div>
+            <div class="more-information-bg no-display" id="more-information-container">
+              <div class="more-information-container">
+                <span id="info-subtitle" class="info-subtitle">预测震级数据解释</span>
+                <div class="more-info">
+                  <p class="info">1. 地震发生的主要原因普遍被认为是地壳板块运动活跃而造成的。<b>距离地壳板块越近，发生地震的可能性越高。</b></p>
+                  <p class="info">2. 地震等级为推测数据。推测等级是根据50年来PGA（地震峰值地面加速度）数据变化大于10%的概率的Gal值，并相对照《中国地震强烈度表》（2008年11月13日发布），来确定对应的地震级别（1g=9.81m/s2）。</p>
+                  <p class="info">3. PGA可以帮助地理学家确定某一地区<b>发生地震灾害风险的可能性及程度</b>；地震加速度值是指地震时地面运动的加速度的峰值，这一数字还会被用来<b>参考为建筑抗震等级指标。</b></p>
+                  <p class="info" id="close" style="text-align: center;">关闭</p>
+                </div>
+
+              </div>
+            </div>
         </div>
+
       </main>
     </div>
+    <img src="" alt="">
 
 
     <script src="https://maps.openquake.org/static/js/dist/jquery.min.js"></script>
@@ -128,11 +145,18 @@
         $("#page-subtitle-2").fadeOut(200);
         $("#number").text(info.seismiCity);
         $("#page-subtitle-1").fadeIn(500);
-        $("#page-subtitle-1").delay(3000).fadeOut(500);
-        $("#page-subtitle-2").delay(4000).fadeIn(500);
-
+        $("#more-information-logo").fadeIn(500);
+        $("#page-subtitle-1").delay(4000).fadeOut(500);
+        $("#page-subtitle-2").delay(5000).fadeIn(500);
       };
-
+      $(document).ready(function(){
+        $("#more-information-logo").click(function(){
+          $("#more-information-container").fadeIn(500);
+        });
+        $("#close").click(function(){
+          $("#more-information-container").fadeOut(500);
+        });
+      });
       function WMSGenerator(x) {
          var crs = map.options.crs;
          var bounds = x;
@@ -241,7 +265,7 @@
               var mapBbox = e.geocode.bbox
               $("input").blur();
               GetFeatureInfo(mapLocation, mapBbox);})
-              
+
 
               // var poly = L.polygon([
               //      bbox.getSouthEast(),
